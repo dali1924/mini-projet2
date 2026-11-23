@@ -7,6 +7,7 @@ import { RechercheParNom } from './recherche-par-nom/recherche-par-nom';
 import { Login } from './login/login';
 import { Forbidden } from './forbidden/forbidden';
 import { medecinGuard } from './medecin-guard';
+import { ListeSpecialites } from './liste-specialites/liste-specialites';
 
 export const routes: Routes = [
   { path: "medecins", component: Medecins },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: "updateMedecin/:id", component: UpdateMedecin },
   { path: "rechercheParSpecialite", component: RechercheParSpecialite },
   { path: "rechercheParNom", component: RechercheParNom },
+  { path: "listeSpecialites", component: ListeSpecialites },
   { path: "login", component: Login },
   { path: "app-forbidden", component: Forbidden },
   { path: "", redirectTo: "medecins", pathMatch: "full" }

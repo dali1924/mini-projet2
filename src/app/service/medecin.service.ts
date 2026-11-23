@@ -52,6 +52,15 @@ export class MedecinService {
     this.medecins.splice(index, 1, m);
   }
 
+  rechercherParSpecialite(idSpec: number): Medecin[] {
+    return this.medecins.filter(m => m.specialite.idSpec == idSpec);
+  }
+
+  rechercherParNom(nom: string): Medecin[] {
+    return this.medecins.filter(m =>
+      m.nomMedecin.toLowerCase().includes(nom.toLowerCase()));
+  }
+
   listeSpecialites(): Specialite[] {
     return this.specialites;
   }
@@ -59,11 +68,16 @@ export class MedecinService {
   consulterSpecialite(id: number): Specialite {
     return this.specialites.find(s => s.idSpec == id)!;
   }
-  rechercherParSpecialite(idSpec: number): Medecin[] {
-    return this.medecins.filter(m => m.specialite.idSpec == idSpec);
+
+  ajouterSpecialite(spec: Specialite) {
+    spec.idSpec = Math.max(0, ...this.specialites.map(s => s.idSpec)) + 1;
+    this.specialites.push(spec);
   }
-  rechercherParNom(nom: string): Medecin[] {
-    return this.medecins.filter(m =>
-      m.nomMedecin.toLowerCase().includes(nom.toLowerCase()));
+
+  updateSpecialite(spec: Specialite) {
+    const index = this.specialites.findIndex(s => s.idSpec == spec.idSpec);
+    if (index > -1) {
+      this.specialites.splice(index, 1, spec);
+    }
   }
 }
