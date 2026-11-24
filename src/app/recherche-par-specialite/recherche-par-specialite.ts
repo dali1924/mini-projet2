@@ -19,7 +19,9 @@ export class RechercheParSpecialite implements OnInit {
   constructor(private medecinService: MedecinService) { }
 
   ngOnInit(): void {
-    this.specialites = this.medecinService.listeSpecialites();
+    this.medecinService.listeSpecialites().subscribe(specs => {
+      this.specialites = specs._embedded.specialites;
+    });
   }
 
   onChange() {

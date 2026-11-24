@@ -22,7 +22,9 @@ export class UpdateMedecin implements OnInit {
               private medecinService: MedecinService) { }
 
   ngOnInit(): void {
-    this.specialites = this.medecinService.listeSpecialites();
+    this.medecinService.listeSpecialites().subscribe(specs => {
+      this.specialites = specs._embedded.specialites;
+    });
     this.currentMedecin = this.medecinService.consulterMedecin(
       this.activatedRoute.snapshot.params['id']);
     this.updatedSpecId = this.currentMedecin.specialite.idSpec;

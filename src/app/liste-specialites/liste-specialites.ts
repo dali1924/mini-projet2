@@ -33,7 +33,9 @@ export class ListeSpecialites implements OnInit {
   }
 
   chargerSpecialites() {
-    this.specialites = [...this.medecinService.listeSpecialites()];
+    this.medecinService.listeSpecialites().subscribe(specs => {
+      this.specialites = specs._embedded.specialites;
+    });
   }
 
   updateSpec(spec: Specialite) {

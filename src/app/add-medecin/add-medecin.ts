@@ -21,7 +21,9 @@ export class AddMedecin implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.specialites = this.medecinService.listeSpecialites();
+    this.medecinService.listeSpecialites().subscribe(specs => {
+      this.specialites = specs._embedded.specialites;
+    });
   }
 
   addMedecin() {
@@ -29,5 +31,6 @@ export class AddMedecin implements OnInit {
     this.newMedecin.specialite = this.newSpecialite;
     this.medecinService.ajouterMedecin(this.newMedecin);
     this.router.navigate(['medecins']);
+    
   }
 }

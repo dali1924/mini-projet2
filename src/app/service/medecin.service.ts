@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Medecin } from '../model/medecin.model';
 import { Specialite } from '../model/specialite.model';
+import { SpecialiteWrapper } from '../model/specialite-wrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +11,11 @@ import { Specialite } from '../model/specialite.model';
 export class MedecinService {
   medecins: Medecin[];
   specialites: Specialite[];
+  
+  // L'URL mte3 Spring Boot (mrigel 8081 w /medecins)
+  apiURLSpec: string = 'http://localhost:8081/medecins/spe';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.specialites = [
       { idSpec: 1, nomSpec: "Cardiologie" },
       { idSpec: 2, nomSpec: "Pédiatrie" }
@@ -61,8 +67,8 @@ export class MedecinService {
       m.nomMedecin.toLowerCase().includes(nom.toLowerCase()));
   }
 
-  listeSpecialites(): Specialite[] {
-    return this.specialites;
+  listeSpecialites(): Observable<SpecialiteWrapper> {
+    return this.http.get<SpecialiteWrapper>(this.apiURLSpec);
   }
 
   consulterSpecialite(id: number): Specialite {
